@@ -1,5 +1,6 @@
 package com.epicode.gestione_viaggi.auth;
 
+import com.epicode.gestione_viaggi.auth.requests_and_responses.RegisterRequest;
 import com.epicode.gestione_viaggi.dipendente.Dipendente;
 import com.epicode.gestione_viaggi.dipendente.DipendenteRepo;
 import jakarta.persistence.EntityExistsException;
@@ -34,21 +35,21 @@ public class AppUserService {
     @Autowired
     private DipendenteRepo dipendenteRepo;
 
-    public AppUser registerUser(String username, String password, Set<Role> roles, String nome, String cognome, String email) {
-        if (appUserRepository.existsByUsername(username)) {
+    public AppUser registerUser(Set<Role> roles, RegisterRequest registerRequest) {
+        if (appUserRepository.existsByUsername(registerRequest.getUsername())) {
             throw new EntityExistsException("Username già in uso");
         }
 
         AppUser appUser = new AppUser();
-        appUser.setUsername(username);
-        appUser.setPassword(passwordEncoder.encode(password));
+        appUser.setUsername(registerRequest.getUsername());
+        appUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         appUser.setRoles(roles);
 
 
         Dipendente dipendente = new Dipendente();
-        dipendente.setNome(nome);
-        dipendente.setCognome(cognome);
-        dipendente.setEmail(email);
+        dipendente.setNome(registerRequest.getNome());
+        dipendente.setCognome(registerRequest.getCognome());
+        dipendente.setEmail(registerRequest.getEmail());
 
         appUser.setDipendente(dipendente);
 
@@ -68,10 +69,15 @@ public class AppUserService {
         return appUserRepository.findByUsername(username);
     }
 
-    public String authenticateUser(String username, String password)  {
+    public String authenticateUser(String email, String password)  {
+
+
+           AppUser u =  appUserRepository.findUserByEmail(email)
+          .orElseThrow(() -> new EntityNotFoundException("Utente non trovato con email: " + email));
+
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username, password)
+                    new UsernamePasswordAuthenticationToken(u.getUsername(), password)
             );
 
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();

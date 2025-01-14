@@ -1,4 +1,4 @@
-package com.epicode.gestione_viaggi.auth;
+package com.epicode.gestione_viaggi.auth.requests_and_responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

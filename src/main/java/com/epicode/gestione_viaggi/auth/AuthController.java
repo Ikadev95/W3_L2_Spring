@@ -1,5 +1,8 @@
 package com.epicode.gestione_viaggi.auth;
 
+import com.epicode.gestione_viaggi.auth.requests_and_responses.AuthResponse;
+import com.epicode.gestione_viaggi.auth.requests_and_responses.LoginRequest;
+import com.epicode.gestione_viaggi.auth.requests_and_responses.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,12 +22,8 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
         appUserService.registerUser(
-                registerRequest.getUsername(),
-                registerRequest.getPassword(),
-                Set.of(Role.ROLE_DIPENDENTE), // Assegna il ruolo di default
-                registerRequest.getNome(),
-                registerRequest.getCognome(),
-                registerRequest.getEmail()
+                Set.of(Role.ROLE_DIPENDENTE),
+                registerRequest
         );
         return ResponseEntity.ok("Registrazione avvenuta con successo");
     }
@@ -32,7 +31,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
         String token = appUserService.authenticateUser(
-                loginRequest.getUsername(),
+                loginRequest.getEmail(),
                 loginRequest.getPassword()
         );
         return ResponseEntity.ok(new AuthResponse(token));

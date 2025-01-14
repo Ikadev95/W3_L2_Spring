@@ -1,4 +1,4 @@
-package com.epicode.gestione_viaggi.auth;
+package com.epicode.gestione_viaggi.auth.configurations;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

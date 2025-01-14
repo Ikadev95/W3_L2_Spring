@@ -6,10 +6,11 @@ import lombok.Data;
 
 import java.util.Set;
 
+// user bean
 @Entity
 @Table(name = "users")
 @Data
-public class AppUser {
+public class  AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,4 +1,4 @@
-package com.epicode.gestione_viaggi.auth;
+package com.epicode.gestione_viaggi.auth.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

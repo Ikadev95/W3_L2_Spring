@@ -1,5 +1,8 @@
-package com.epicode.gestione_viaggi.auth;
+package com.epicode.gestione_viaggi.auth.configurations;
 
+import com.epicode.gestione_viaggi.auth.CustomUserDetailsService;
+import com.epicode.gestione_viaggi.auth.JwtAuthenticationEntryPoint;
+import com.epicode.gestione_viaggi.auth.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
